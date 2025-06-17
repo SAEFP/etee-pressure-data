@@ -2,9 +2,9 @@ _RECORDING ETEE PRESSURE DATA FROM UNREAL ENGINE 5.3_
 
 Event Graph of the VR Pawn in Unreal Engine 5.3 for recording pressure data from each finger 
 
-<img src="./images/VRPawn_Event_graph.PNG" alt="VRPawn_Event_graph" width="600"/>     
-<img src="./images/VRPawn_LH.PNG" alt="VRPawn_LH" width="600"/>        
-<img src="./images/VRPawn_RH.PNG" alt="VRPawn_RH" width="600"/> 
+<img src="./images/VRPawn_Event_graph.png" alt="VRPawn_Event_graph" width="600"/>     
+<img src="./images/VRPawn_LH.png" alt="VRPawn_LH" width="600"/>        
+<img src="./images/VRPawn_RH.png" alt="VRPawn_RH" width="600"/> 
 
 IMC hands specified for etee VR controllers
 
