@@ -1,6 +1,6 @@
 _RECORDING ETEE PRESSURE DATA FROM UNREAL ENGINE 5.3_
 
-This repe explains how to record data from **Etee VR Controllers" using Unreal Engine and stream the data via Lab Streaming Layer (LSL).
+This repo explains how to record data from **Etee VR Controllers" using Unreal Engine and stream the data via Lab Streaming Layer (LSL).
 
 ## Table of Contents
 - [SteamVR Setup](#-steamvr-setup)
@@ -19,6 +19,8 @@ This repe explains how to record data from **Etee VR Controllers" using Unreal E
 1. Launch **SteamVR**.
 2. Go to **Devices > Controller Settings > Manage Bindings**. (Do this after starting the **VR Preview** of your Unreal project!)
 3. Choose the input mapping context: `IMC_hands.
+
+Through editting the IMC_Hands, Unreal Engine will know how to interpret the input data from the controllers.
 
 For the current project, only the trackpad is used as a button. 
 
