@@ -1,6 +1,6 @@
 _RECORDING ETEE PRESSURE DATA FROM UNREAL ENGINE 5.3_
 
-This repe explains how to record data from **Etee VR Controllers" using Unreal Engine and stream the data via Lab Streaming Layer (LSL).
+This repo explains how to record data from **Etee VR Controllers" using Unreal Engine and stream the data via Lab Streaming Layer (LSL).
 
 ## Table of Contents
 - [SteamVR Setup](#-steamvr-setup)
