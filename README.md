@@ -10,8 +10,7 @@ This repe explains how to record data from **Etee VR Controllers" using Unreal E
 - [LSL Cube Actor](#-lsl-cube-actor)
   - [Components](#components)
   - [Event Graph Logic](#event-graph-logic)
-- [Data Structure](#-data-structure)
-- [Data Analysis](#-data-analysis)
+- [Data Recording for LSL](#-data-recording)
 
 ## SteamVR Setup
 
