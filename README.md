@@ -1,6 +1,7 @@
 _RECORDING ETEE PRESSURE DATA FROM UNREAL ENGINE 5.3_
 
-This repe explains how to record data from **Etee VR Controllers" using Unreal Engine and stream the data via Lab Streaming Layer (LSL).
+This repo explains how to record data from **Etee VR Controllers" using Unreal Engine and stream the data via Lab Streaming Layer (LSL) in real-time.
+
 
 ## Table of Contents
 - [SteamVR Setup](#-steamvr-setup)
@@ -18,11 +19,16 @@ This repe explains how to record data from **Etee VR Controllers" using Unreal E
 
 1. Launch **SteamVR**.
 2. Go to **Devices > Controller Settings > Manage Bindings**. (Do this after starting the **VR Preview** of your Unreal project!)
-3. Choose the input mapping context: `IMC_hands`.
+3. Choose the input mapping context: `IMC_hands.
+
+For the current project, only the trackpad is used as a button. 
 
 <img src="./images/imc-hands-bindings.png" alt="imc-hands-bindings" width="600"/> 
 
-### B. Assign Trackers (This step is a reminder. Etee VR Controllers can be used with Quest headsets with Vive Ultimate trackers. Ensure that Vive ultimate trackers are assigned to the accurate hands for accurate alibration. Another repo in this projects's GitHub explains how to use Etee VR Controllers and Vive Ultimate trackers.)
+### B. Assign Trackers 
+
+(This step is a reminder. Etee VR Controllers can be used with Quest headsets with Vive Ultimate trackers. Ensure that Vive ultimate trackers are assigned to the accurate hands for accurate alibration. Another repo in this projects's GitHub explains how to use Etee VR Controllers and Vive Ultimate trackers.)
+
 1. Open **SteamVR Settings > Manage Trackers**.
 2. Assign **Vive Ultimate Trackers** to:
    - Right Hand
@@ -62,8 +68,20 @@ These represent total pressure from the right and left hands.
 
 For each input:
 
-1. Use the `Input Action` node (e.g. `IA_Hand_IndexCurl_Right`)
+1. Use the `Input Action` node for each finger (e.g. `IA_Hand_IndexCurl_Right`)
+
+Input Actions which are events that happens when you move or press something (like curling your index finger) is used.
+
+For each finger (thumb, index, middle, etc.), we set up an input action, like:
+
+IA_Hand_IndexCurl_Right
+
+IA_Hand_ThumbCurl_Left
+
 2. Connect to a `Set` node to update `RH_Pressure`
+
+When an input action is triggered (for example, when you curl your index finger), we use a Set node to store that finger’s pressure value in a variable.
+
 3. Store values in a pressure array with 5 elements:
 
 0: Index
@@ -71,6 +89,8 @@ For each input:
 2: Ring
 3: Pinky
 4: Thumb
+
+We collect all finger pressures in a list (called an array). 
 
 Repeat the same for `LH_Pressure`.
 
@@ -80,16 +100,18 @@ Repeat the same for `LH_Pressure`.
 
 ## LSL Cube
 
-Create a new Actor Blueprint named `LSL_Cube`.
+We created another Blueprint actor called the  `LSL_Cube`. It runs constantly (using Event Tick, which updates every frame). It records the finger pressure values and hand position/orientation and headset position/orientation. It combines everything into one array (a long list of values).
 
-### Components
+### Components in the LSL Cube
 
 - `LSLOutletMarkers`
 - `LSLOutlet_Headset`
 - `LSLOutlet_RH`
 - `LSLOutlet_LH`
+<img src="./images/LSL_Components.png" alt="LSL_Components" width="600"/> 
 
-These manage LSL stream outlets for data streaming to LSL from the controllers including position and orientation of the controllers and pressure data from each finger.
+These LSL stream outlets streams all the data to LSL including position and orientation of the controllers and the headset and pressure data from each finger.
+
 ### Event Graph Logic
 
 #### Step-by-step:
@@ -100,9 +122,17 @@ These manage LSL stream outlets for data streaming to LSL from the controllers i
 4. Use 5 `Get` nodes to extract individual finger values
 5. Retrieve `Hand_Right` socket location and rotation
 - Use `Get Socket Location` and `Get Socket Rotation`
-- Break the vectors into X/Y/Z.
+- Break the vectors into X/Y/Z and Pitch/Yaw/Roll.
 
-6. Create a final array using `Make Array`:
+We also get the hand’s position and rotation from the VR Pawn by checking the socket on the hand. This gives us:
+
+Position (X, Y, Z)
+
+Rotation (Pitch, Yaw, Roll)
+
+<img src="./images/LSL-cube.png" alt="LSL-cube" width="600"/> 
+
+6. Create a final array using `Make Array`and identify the name of the each index for each hand:
 Index 0: Position X
 Index 1: Position Y
 Index 2: Position Z
@@ -115,13 +145,13 @@ Index 8: Ring Pressure
 Index 9: Pinky Pressure
 Index 10: Thumb Pressure
 
+<img src="./images/LSLOutlet_RHand_Details.png" alt="LSLOutlet_RHand_Details" width="600"/> 
+
 7. Send this array using `Push Sample` to `LSLOutlet_RH`.
 
 Repeat for left hand using `LSLOutlet_LH`.
 
-<img src="./images/LSL-cube.png" alt="LSL-cube" width="600"/> 
-<img src="./images/LSL_Components.png" alt="LSL_Components" width="600"/> 
-<img src="./images/LSLOutlet_RHand_Details.png" alt="LSLOutlet_RHand_Details" width="600"/> 
+
 
 ## 📊 Data Analysis
 
