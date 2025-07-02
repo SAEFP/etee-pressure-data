@@ -24,7 +24,7 @@ Before starting, ensure you have:
   - Lab Streaming Layer (LSL) plugin, Lab Recorder (for data recording) 
 [![LSL](https://img.shields.io/badge/LSL-Lab%20Streaming%20Layer-green.svg)](https://github.com/sccn/labstreaminglayer/?tab=readme-ov-file)
   - Quest Link
-  - Vive Hub (See [separate repository](link-to-repo) for detailed Etee + Vive Ultimate tracker setup.)
+  - Vive Hub (See [separate repository](https://github.com/SAEFP/etee-controllers-with-meta-quest-pro) for detailed Etee + Vive Ultimate tracker setup.)
 
 ## 📚 Table of Contents
 
