@@ -1,67 +1,110 @@
-_RECORDING ETEE PRESSURE DATA FROM UNREAL ENGINE 5.3_
+# Recording Etee Pressure Data from Unreal Engine 5.3
 
-This repo explains how to record data from **Etee VR Controllers** using Unreal Engine and stream the data via Lab Streaming Layer (LSL).
+A documentation and tutorial for recording and streaming pressure data from **Etee VR Controllers** using Unreal Engine 5.3 and Lab Streaming Layer (LSL). This system records individual finger pressure values along with hand and headset tracking data for research.
 
-## Table of Contents
+## 🎯 Overview
+
+This project enables real-time data collection from Etee VR controllers, including:
+- **Individual finger pressure** data (thumb, index, middle, ring, pinky)
+- **Hand position and orientation** 
+- **Headset position and orientation** 
+- **Real-time data streaming** via LSL, lab recorder for data analysis
+
+## 📋 Prerequisites
+
+Before starting, ensure you have:
+
+- **Hardware:**
+  - Etee VR Controllers
+  - VR Headset (Meta Quest Pro HMD is used)
+  - Vive Ultimate Trackers (These trackers are essential to use Etee VR Controllers with Quest HMD.)  
+- **Software:**
+  - Unreal Engine 5.3
+  - SteamVR
+  - Lab Streaming Layer (LSL) plugin, Lab Recorder (for data recording) 
+[![LSL](https://img.shields.io/badge/LSL-Lab%20Streaming%20Layer-green.svg)](https://github.com/sccn/labstreaminglayer/?tab=readme-ov-file)
+  - Quest Link
+  - Vive Hub (See [separate repository](link-to-repo) for detailed Etee + Vive Ultimate tracker setup.)
+
+## 📚 Table of Contents
+
+- [Overview](#-overview)
+- [Prerequisites](#-prerequisites)
 - [SteamVR Setup](#-steamvr-setup)
+  - [Configure Input Bindings](#a-configure-input-bindings)
+  - [Assign Trackers](#b-assign-trackers)
 - [Unreal Engine Setup](#-unreal-engine-setup)
-  - [Input Mapping](#input-mapping)
-  - [VR Pawn](#vr-pawn)
+  - [Input Mapping](#-input-mapping)
+  - [VR Pawn Configuration](#-vr-pawn-configuration)
 - [LSL Cube Actor](#-lsl-cube-actor)
   - [Components](#components)
   - [Event Graph Logic](#event-graph-logic)
-- [Data Recording for LSL](#-data-recording)
+- [Data Recording](#-data-recording)
 
-## SteamVR Setup
+
+## 🔧 SteamVR Setup
 
 ### A. Configure Input Bindings
 
-1. Launch **SteamVR**.
-2. Go to **Devices > Controller Settings > Manage Bindings**. (Do this after starting the **VR Preview** of your Unreal project!)
-3. Choose the input mapping context: `IMC_hands.
+> **⚠️ Important**: Complete this step **after** starting VR Preview in your Unreal project!
 
-- Through editting the IMC_Hands, Unreal Engine will know how to interpret the input data from the controllers.
+1. **Launch SteamVR**
+2. **Navigate to Controller Settings**:
+   - Go to **Devices > Controller Settings > Manage Bindings**
+3. **Select Input Mapping Context**: Choose `IMC_hands`
 
-- For the current project, only the trackpad is used as a button. 
+**Why this matters**: Through editing the `IMC_Hands`, Unreal Engine will know how to interpret the input data from the controllers. For this project, only the trackpad is used as a button.
 
-<img src="./images/imc-hands-bindings.png" alt="imc-hands-bindings" width="600"/> 
+<img src="./images/imc-hands-bindings.png" alt="SteamVR Input Bindings Configuration" width="600"/> 
 
 ### B. Assign Trackers 
 
-(This step is a reminder. Etee VR Controllers can be used with Quest headsets with Vive Ultimate trackers. Ensure that Vive ultimate trackers are assigned to the accurate hands for accurate alibration. Another repo in this projects's GitHub explains how to use Etee VR Controllers and Vive Ultimate trackers.)
+> **📝 Note**: Etee VR Controllers work with Quest headsets using Vive Ultimate trackers. Ensure trackers are assigned to the correct hands for accurate calibration. See our [separate repository](link-to-repo) for detailed Etee + Vive Ultimate tracker setup.
 
-1. Open **SteamVR Settings > Manage Trackers**.
-2. Assign **Vive Ultimate Trackers** to:
-   - Right Hand
-   - Left Hand
+1. **Open SteamVR Settings**: Navigate to **Settings > Manage Trackers**
+2. **Assign Vive Ultimate Trackers** to:
+   - ✅ Right Hand
+   - ✅ Left Hand
 
-<img src="./images/manage-trackers-right.png" alt="manage-trackers-right" width="600"/> 
-<img src="./images/manage-trackers-left.png" alt="manage-trackers-left" width="600"/> 
+<img src="./images/manage-trackers-right.png" alt="Right Hand Tracker Assignment" width="600"/> 
+<img src="./images/manage-trackers-left.png" alt="Left Hand Tracker Assignment" width="600"/> 
 
 ## Unreal Engine Setup
 
 ### 🎯 Input Mapping
 
-#### In `IMC_Hands`:
+#### Setting up Enhanced Input in `IMC_Hands`:
 
-Add Enhanced Input mappings:
+**Configuration Steps**:
+1. Navigate to **Content Browser > VR Template > Input**
+2. Select `IMC_Hands`
+3. Add each Input Action written below
 
-- **Finger Curl (Each Hand)**:
-  - `IA_Hand_ThumbCurl_Left/Right`
-  - `IA_Hand_IndexCurl_Left/Right`
-  - `IA_Hand_MiddleCurl_Left/Right`
-  - `IA_Hand_RingCurl_Left/Right`
-  - `IA_Hand_PinkyCurl_Left/Right`
 
-<img src="./images/imc_hands_UE.png" alt="imc_hands_UE" width="600"/> 
+| Input Action 
+|--------------|
+| `IA_Hand_ThumbCurl_Left` | 
+| `IA_Hand_ThumbCurl_Right` | 
+| `IA_Hand_IndexCurl_Left` | 
+| `IA_Hand_IndexCurl_Right` | 
+| `IA_Hand_MiddleCurl_Left` | 
+| `IA_Hand_MiddleCurl_Right` | 
+| `IA_Hand_RingCurl_Left` | 
+| `IA_Hand_RingCurl_Right` | 
+| `IA_Hand_PinkyCurl_Left` | 
+| `IA_Hand_PinkyCurl_Right` | 
+
+
+<img src="./images/imc_hands_UE.png" alt="Enhanced Input Mapping Context Configuration" width="600"/> 
 
 ### 🧍 VR Pawn
 
-Inside your `VRPawn` Blueprint:
+In your `VRPawn` Blueprint, create the following variables to store pressure data:
 
-- Create float variables:
-  - `RH_Pressure`
-  - `LH_Pressure`
+| Variable Name | Type | 
+|---------------|------|---------------|---------|
+| `RH_Pressure` | Float | 
+| `LH_Pressure` | Float | 
 
 - These represent total pressure from the right and left hands.
 
@@ -141,21 +184,24 @@ Repeat the same for `LH_Pressure`.
 
 <img src="./images/LSLOutlet_RHand_Details.png" alt="LSLOutlet_RHand_Details" width="600"/> 
 
-7. Send this array using `Push Sample` to `LSLOutlet_RH`.
+7. **Stream Data**: Send arrays using `Push Sample` to respective outlets:
+   - Right hand data → `LSLOutlet_RH`
+   - Left hand data → `LSLOutlet_LH` (same structure)
 
-- Repeat for left hand using `LSLOutlet_LH`.
+## 📊 Data Recording
 
+### Setting up LabRecorder
 
+1. **Install LabRecorder**: Download from [LSL Repository](https://github.com/labstreaminglayer/App-LabRecorder)
+2. **Launch LabRecorder**: Start the application
+3. **Detect Streams**: LabRecorder should automatically detect your LSL streams
 
-## 📊 Data Analysis
+### Recording Process
 
-Once streaming:
-
-- Use LabRecorder to record .xdf file.  
-
-
-
-
-
+1. **Select Streams**: Check the streams you want to record
+2. **Set Filename**: Choose output location and filename (`.xdf` format)
+3. **Start Recording**: Click "Start" to begin data capture
+4. **Perform VR Session**: Use your Etee controllers in the VR environment
+5. **Stop Recording**: Click "Stop" when finished
 
 
