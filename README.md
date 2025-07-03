@@ -172,18 +172,17 @@ Repeat the same for `LH_Pressure`.
 
 6. Create a final array using `Make Array`and identify the name of the each index for each hand:
 
-|--------------|
-|Index 0 | Position X |
-|Index 1 | Position Y |
-|Index 2 | Position Z |
-|Index 3 | Orientation X (Pitch) |
-|Index 4 | Orientation Y (Yaw) |
-|Index 5 | Orientation Z (Roll) |
-|Index 6 | Index Pressure |
-|Index 7 | Middle Pressure |
-|Index 8 | Ring Pressure |
-|Index 9 | Pinky Pressure |
-|Index 10 | Thumb Pressure |
+| Index 0 | Position X |
+| Index 1 | Position Y |
+| Index 2 | Position Z |
+| Index 3 | Orientation X (Pitch) |
+| Index 4 | Orientation Y (Yaw) |
+| Index 5 | Orientation Z (Roll) |
+| Index 6 | Index Pressure |
+| Index 7 | Middle Pressure |
+| Index 8 | Ring Pressure |
+| Index 9 | Pinky Pressure |
+| Index 10 | Thumb Pressure |
 
 <img src="./images/LSLOutlet_RHand_Details.png" alt="LSLOutlet_RHand_Details" width="600"/> 
 
