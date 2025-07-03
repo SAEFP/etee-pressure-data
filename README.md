@@ -124,6 +124,7 @@ For each input:
 
 3. Store values in a pressure array with 5 elements:
 
+|--------------|
 |0|Index|
 |1|Middle|
 |2|Ring|
@@ -144,6 +145,7 @@ Repeat the same for `LH_Pressure`.
 
 ### Components in the LSL Cube
 
+|--------------|
 | LSLOutletMarkers |
 | LSLOutlet_Headset |
 | LSLOutlet_RH |
@@ -170,6 +172,7 @@ Repeat the same for `LH_Pressure`.
 
 6. Create a final array using `Make Array`and identify the name of the each index for each hand:
 
+|--------------|
 |Index 0 | Position X |
 |Index 1 | Position Y |
 |Index 2 | Position Z |
