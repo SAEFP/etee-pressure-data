@@ -174,7 +174,7 @@ Repeat the same for `LH_Pressure`.
 
 6. Create a final array using `Make Array`and identify the name of the each index for each hand:
 
-| | |
+
 |---|---|
 | Index 0 | Position X |
 | Index 1 | Position Y |
