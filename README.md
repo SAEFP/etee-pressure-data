@@ -102,7 +102,7 @@ Before starting, ensure you have:
 In your `VRPawn` Blueprint, create the following variables to store pressure data:
 
 | Variable Name | Type | 
-|---------------|------|---------------|---------|
+|---------------|------|
 | `RH_Pressure` | Float | 
 | `LH_Pressure` | Float | 
 
@@ -124,11 +124,11 @@ For each input:
 
 3. Store values in a pressure array with 5 elements:
 
-- 0: Index
-- 1: Middle
-- 2: Ring
-- 3: Pinky
-- 4: Thumb
+|0|Index|
+|1|Middle|
+|2|Ring|
+|3|Pinky|
+|4|Thumb|
 
 - We collect all finger pressures in a list (called an array). 
 
@@ -144,10 +144,10 @@ Repeat the same for `LH_Pressure`.
 
 ### Components in the LSL Cube
 
-- `LSLOutletMarkers`
-- `LSLOutlet_Headset`
-- `LSLOutlet_RH`
-- `LSLOutlet_LH`
+| LSLOutletMarkers |
+| LSLOutlet_Headset |
+| LSLOutlet_RH |
+| LSLOutlet_LH |
 <img src="./images/LSL_Components.png" alt="LSL_Components" width="600"/> 
 
 - These LSL stream outlets streams all the data to LSL including position and orientation of the controllers and the headset and pressure data from each finger.
@@ -170,17 +170,17 @@ Repeat the same for `LH_Pressure`.
 
 6. Create a final array using `Make Array`and identify the name of the each index for each hand:
 
-- Index 0: Position X
-- Index 1: Position Y
-- Index 2: Position Z
-- Index 3: Orientation X (Pitch)
-- Index 4: Orientation Y (Yaw)
-- Index 5: Orientation Z (Roll)
-- Index 6: Index Pressure
-- Index 7: Middle Pressure
-- Index 8: Ring Pressure
-- Index 9: Pinky Pressure
-- Index 10: Thumb Pressure
+|Index 0 | Position X |
+|Index 1 | Position Y |
+|Index 2 | Position Z |
+|Index 3 | Orientation X (Pitch) |
+|Index 4 | Orientation Y (Yaw) |
+|Index 5 | Orientation Z (Roll) |
+|Index 6 | Index Pressure |
+|Index 7 | Middle Pressure |
+|Index 8 | Ring Pressure |
+|Index 9 | Pinky Pressure |
+|Index 10 | Thumb Pressure |
 
 <img src="./images/LSLOutlet_RHand_Details.png" alt="LSLOutlet_RHand_Details" width="600"/> 
 
